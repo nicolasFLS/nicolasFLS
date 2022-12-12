@@ -1,35 +1,63 @@
 # Checklist
 
-## 1. Forensic Questions 🔎
+## 1) Update Computer 🖥️
+* Do sudo apt-get update && sudo apt update && sudo apt upgrade
 
-* Solve the three forensic questions. These may rely on files or programs you will eventually delete, which is why we do them first.
+## 2) Forensic Questions 🔎
 
-## 2. Configure Update Settings 📦
+* Solve the forensic questions. These may rely on files or programs you will eventually delete, which is why we do them first.
 
-* Open System Settings and make sure the system checks for and installs updates as much as possible, and make sure the correct software sources are enabled.
-* `sudo nano /etc/apt/sources.list` and make sure nothing besides the official Ubuntu repositories are enabled.
-* `nano` is a built-in command-line text editor. Learn more [here](https://help.ubuntu.com/community/Nano)
+## 3) Configure Update Settings 📦
 
-## 3. Run Script 📜
+* Go to software & updates and make sure the update settings are put as:
+* Subscribed to all updates
+* Automatically check for updates daily
+* When there are security updates download and install automatically
+* When there are other updates display immediately
+* Notify me of a new ubuntu verson for long-term support versions
 
-* Before you do this, make sure you set the script to executable. You can do this by running `chmod +x script.sh` in the terminal.
-* Make sure you modify the script to use the primary user's password instead of the default password `Cyb3rP@triot`, as changing the primary user's password will not be necessary and can introduce login errors.
-* Once the script is ready, run it with `./script.sh`. This will take a while, so be patient.
+## 4) Privacy Settings ⚙️
 
-## 4. Manage Services ⚙️
+* In setting go to privacy and go to file history and trash
+* Make sure the settings are set as:
+* File history off
+* Automatically delete trash content
+* Automatically delete temporary files
+* Automatically delete period 1 hour
 
-* List enabled services with `service --status-all`
-* Common unwanted services are disabled by the script, but there may be other rogue services to remove
-* If SSH is required, use `sudo nano /etc/ssh/sshd_config` to examine and configure SSH access
+## 5) Remove Users 👤
 
-## 5. Check Ports 🚤
+* Remove any users that aren't supposed to have access on the computer
+* Remove admin abilities of users that aren't supposed to have admin
 
-* Run `sudo lsof -i -P -n | grep -v "(ESTABLISHED)"` to list all services listening on ports
-* Run `sudo apt purge <package_name>` to remove any unwanted services
-* If you can't remove the package for dependency reasons, you can stop and mask the service with `sudo systemctl --now mask <service_name>`
+## 5) Root Access 🚫
 
-## 6. Check for Rootkits 🔒
+* Run awk -F: '($3=="0") {print}' /etc/passwd
+* Make sure root is the only thing showing
+* If root is not the only thing showing remove the user (if they aren't supposed to be on the computer)
 
+## 6) Check For Empty Passwords
+
+* Run sudo cat /etc/shadow | awk -F: '($2=="") {print $1}'
+* If anything shows make it so they change their password at next login or give them you're password
+
+## 7) Configure SSH
+
+* Run sudo nano /etc/ssh/sshd_config
+* Go find and configure things as:
+* PermitRootLogin no
+* Port 22222
+* PermitEmptyPasswords no
+* Then save and exit and in the terminal run service ssh restart
+
+## 8) Remove Unwanted Files With Bleachbit
+
+* Install bleachbit with sudo apt install bleachbit
+* Run bleachbit as root
+
+## 9) Check For Rootkits 🔒
+
+* Install Rootkit Hunter with sudo apt install rkhunter
 * Run Rookit Hunter with `sudo rkhunter -c`
 * The following may result in positives, but are safe to leave:
 * `/usr/bin/unhide.rb`
@@ -43,25 +71,20 @@
 * If Rootkit Hunter finds anything aside from `unhide.rb`, agree to let it clean the system
 * Set Rootkit Hunter to run periodically by opening `/etc/default/rkhunter` and changing `CRON_DAILY_RUN` and `CRON_DB_UPDATE` to true
 
-## 7. Run Lynis 📝
+## 10) Run Lynis 📝
 
 * Lynis gives an incredibly comprehensive system audit report
-* You won't be able to do this on APS Wi-Fi because it blocks cisofy.com for some reason
-* `wget -q -O - https://packages.cisofy.com/keys/cisofy-software-public.key | sudo apt-key add -`
-* `echo "deb https://packages.cisofy.com/community/lynis/deb/ stable main" | sudo tee /etc/apt/sources.list.d/cisofy-lynis.list`
-* `sudo apt install apt-transport-https`
-* `sudo apt update`
-* `sudo apt install lynis`
-* Run `sudo lynis audit system` to begin the report
+* Install lynis with sudo apt install lynis
+* Run sudo lynis audit system to begin the report
 
-## 8. Check Password Files 🔑
+## 11) Check Password Files 🔑
 
-* The script sets up the users as dictated by the files, but there may be hidden users or undesirable groups.
-* `sudo gedit /etc/passwd`
-* `sudo gedit /etc/shadow`
-* `sudo gedit /etc/sudoers.d`
+* Check hidden users or undesirable groups.
+* sudo gedit /etc/passwd
+* sudo gedit /etc/shadow
+* sudo gedit /etc/sudoers.d
 
-## 9. Check Log Files 📄
+## 12) Check Log Files 📄
 
 * Log files can allow you to find potential security issues caused by malicious activity.
 * /var/log/messages
@@ -72,10 +95,6 @@
 * /var/log/kern.log
 * /var/log/dpkg.log
 * The dpkg log can be very useful to find programs installed around the same time as known malware
-
-## 10. Remove User Files
-
-* Look in userfiles.txt for the files you want to remove.
 
 ## 11. Check Running Processes 💿
 
@@ -119,9 +138,8 @@
 * `inet_interfaces = loopback-only`
 * Restart postfix with `sudo systemctl restart postfix`
 
-## 15. Configure File History and Trash 🗑️
+## 5. Check Ports 🚤
 
-* Open Settings > Privacy > File History & Trash and do the following:
-* Disable File History
-* Enable Automatically Delete Trash
-* Enable Automatically Delete Temporary Files
+* Run `sudo lsof -i -P -n | grep -v "(ESTABLISHED)"` to list all services listening on ports
+* Run `sudo apt purge <package_name>` to remove any unwanted services
+* If you can't remove the package for dependency reasons, you can stop and mask the service with `sudo systemctl --now mask <service_name>`
