@@ -108,7 +108,7 @@
 
 ## 16) Check Running Processes 💿
 
-* ps aef lists all processes. You might want to scan these to see if anything weird is listed
+* `ps aef` lists all processes. You might want to scan these to see if anything weird is listed
 * `ps aux | grep netcat` returns all running processes with `netcat` in the name. Netcat is a networking utility that we don't want on the machine.
 * Note: If Netcat isn't running, the above command will still return one entry for `grep --color=auto netcat` (the process you invoke by running the command)
 * htop is a useful tool for monitoring processes. Learn more [here](https://www.tecmint.com/htop-cpu-monitoring-tool-in-linux/)
@@ -140,7 +140,7 @@
 
 * Postfix should be removed, but I think Lynis installs it by default, so if you're able to install Lynis, you'll need to configure postfix to only send mail locally.
 * `sudo gedit /etc/postfix/main.cf`
-* Add or modify the following line in the `RECEIVING MAIL` section:
+* Add or modify the following line in the RECEIVING MAIL section:
 * `inet_interfaces = loopback-only`
 * Restart postfix with `sudo systemctl restart postfix`
 
