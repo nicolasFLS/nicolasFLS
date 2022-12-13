@@ -83,8 +83,8 @@
 ## 13) Run Lynis 📝
 
 * Lynis gives an incredibly comprehensive system audit report
-* Install lynis with sudo apt install lynis
-* Run sudo lynis audit system to begin the report
+* Install lynis with `sudo apt install lynis`
+* Run `sudo lynis audit system` to begin the report
 
 ## 14) Check Password Files 🔑
 
