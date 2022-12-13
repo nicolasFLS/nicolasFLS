@@ -1,7 +1,7 @@
 # Checklist
 
 ## 1) Update Computer 🖥️
-* Do sudo apt-get update && sudo apt update && sudo apt upgrade
+* Run `sudo apt-get update && sudo apt update && sudo apt upgrade`
 
 ## 2) Forensic Questions 🔎
 
@@ -27,7 +27,7 @@
 
 ## 5) Turn On Firewall
 
-* Install gufw with sudo apt install gufw
+* Install gufw with `sudo apt install gufw`
 * Run it and turn on firewall with default settings
 
 ## 6) Remove Users 👤
@@ -37,18 +37,18 @@
 
 ## 7) Root Access 🚫
 
-* Run awk -F: '($3=="0") {print}' /etc/passwd
+* Run `awk -F: '($3=="0") {print}' /etc/passwd`
 * Make sure root is the only thing showing
 * If root is not the only thing showing remove the user (if they aren't supposed to be on the computer)
 
 ## 8) Check For Empty Passwords ⬜
 
-* Run sudo cat /etc/shadow | awk -F: '($2=="") {print $1}'
+* Run `sudo cat /etc/shadow | awk -F: '($2=="") {print $1}'`
 * If anything shows make it so they change their password at next login or give them you're password
 
 ## 9) Configure SSH 👨🏻‍💻
 
-* Run sudo nano /etc/ssh/sshd_config
+* Run `sudo gedit /etc/ssh/sshd_config`
 * Go find and configure things as:
 * PermitRootLogin no
 * Port 22222
@@ -61,13 +61,13 @@
 
 ## 11) Remove Unwanted Files With Bleachbit 🧹
 
-* Install bleachbit with sudo apt install bleachbit
+* Install bleachbit with `sudo apt install bleachbit`
 * Run bleachbit as root and clean
 
 ## 12) Check For Rootkits 🔒
 
-* Install Rootkit Hunter with sudo apt install rkhunter
-* Run Rookit Hunter with sudo rkhunter -c
+* Install Rootkit Hunter with `sudo apt install rkhunter`
+* Run Rookit Hunter with `sudo rkhunter -c`
 * The following may result in positives, but are safe to leave:
 * /usr/bin/unhide.rb
 * passwd file changes
@@ -89,10 +89,10 @@
 ## 14) Check Password Files 🔑
 
 * Check hidden users or undesirable groups.
-* sudo gedit /etc/passwd
+* `sudo gedit /etc/passwd`
 * Also in /etc/passwd change PASS_MAXLEN to 90, PASS_MINLEN to 1, and PASS_WARNAGE 14
-* sudo gedit /etc/shadow
-* sudo gedit /etc/sudoers.d
+* `sudo gedit /etc/shadow`
+* `sudo gedit /etc/sudoers.d`
 
 ## 15) Check Log Files 📄
 
@@ -109,14 +109,14 @@
 ## 16) Check Running Processes 💿
 
 * ps aef lists all processes. You might want to scan these to see if anything weird is listed
-* ps aux | grep netcat returns all running processes with `netcat` in the name. Netcat is a networking utility that we don't want on the machine.
+* `ps aux | grep netcat` returns all running processes with `netcat` in the name. Netcat is a networking utility that we don't want on the machine.
 * Note: If Netcat isn't running, the above command will still return one entry for `grep --color=auto netcat` (the process you invoke by running the command)
 * htop is a useful tool for monitoring processes. Learn more [here](https://www.tecmint.com/htop-cpu-monitoring-tool-in-linux/)
 * Learn more about ps [here](https://www.computernetworkingnotes.com/linux-tutorials/ps-aux-command-and-ps-command-explained.html)
 
 ## 17) Check for Startup Programs 🚀
 
-* Use sudo nano <file name> to check the contents of the following files:
+* Use sudo gedit <file name> to check the contents of the following files:
 * /etc/rc.local
 * /etc/crontab
 * ~/.config/autostart
@@ -139,13 +139,13 @@
 ## 18) Ensure postfix is configured for local use only 📬
 
 * Postfix should be removed, but I think Lynis installs it by default, so if you're able to install Lynis, you'll need to configure postfix to only send mail locally.
-* `sudo nano /etc/postfix/main.cf`
+* `sudo gedit /etc/postfix/main.cf`
 * Add or modify the following line in the `RECEIVING MAIL` section:
 * `inet_interfaces = loopback-only`
 * Restart postfix with `sudo systemctl restart postfix`
 
 ## 19) Check Ports 🚤
 
-* Run sudo lsof -i -P -n | grep -v "(ESTABLISHED)" to list all services listening on ports
-* Run sudo apt purge <package_name> to remove any unwanted services
-* If you can't remove the package for dependency reasons, you can stop and mask the service with sudo systemctl --now mask <service_name>
+* Run `sudo lsof -i -P -n | grep -v "(ESTABLISHED)"` to list all services listening on ports
+* Run `sudo apt purge <package_name>` to remove any unwanted services
+* If you can't remove the package for dependency reasons, you can stop and mask the service with `sudo systemctl --now mask <service_name>`
