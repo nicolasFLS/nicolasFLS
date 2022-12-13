@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @spinTKOV
 - 👀 I’m interested in Linux
-- 🌱 I’m currently learning C# and Unity
+- 🌱 I’m currently learning Java
 - 💞️ I’m not looking to collaborate
 - 📫 How to reach me spintkov@gmail.com
