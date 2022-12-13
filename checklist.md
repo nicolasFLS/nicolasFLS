@@ -25,23 +25,28 @@
 * Automatically delete temporary files
 * Automatically delete period 1 hour
 
-## 5) Remove Users 👤
+## 5) Turn On Firewall
+
+* Install gufw with sudo apt install gufw
+* Run it and turn on firewall with default settings
+
+## 6) Remove Users 👤
 
 * Remove any users that aren't supposed to have access on the computer
 * Remove admin abilities of users that aren't supposed to have admin
 
-## 5) Root Access 🚫
+## 7) Root Access 🚫
 
 * Run awk -F: '($3=="0") {print}' /etc/passwd
 * Make sure root is the only thing showing
 * If root is not the only thing showing remove the user (if they aren't supposed to be on the computer)
 
-## 6) Check For Empty Passwords ⬜
+## 8) Check For Empty Passwords ⬜
 
 * Run sudo cat /etc/shadow | awk -F: '($2=="") {print $1}'
 * If anything shows make it so they change their password at next login or give them you're password
 
-## 7) Configure SSH 👨🏻‍💻
+## 9) Configure SSH 👨🏻‍💻
 
 * Run sudo nano /etc/ssh/sshd_config
 * Go find and configure things as:
@@ -50,16 +55,16 @@
 * PermitEmptyPasswords no
 * Then save and exit and in the terminal run service ssh restart
 
-## 8) Configure Firefox 🦊
+## 10) Configure Firefox 🦊
 
 * Go through Firefox settings and make everything as secure as possible. Make sure Firefox is updated before you do this, as settings may change between versions. 
 
-## 9) Remove Unwanted Files With Bleachbit 🧹
+## 11) Remove Unwanted Files With Bleachbit 🧹
 
 * Install bleachbit with sudo apt install bleachbit
 * Run bleachbit as root and clean
 
-## 10) Check For Rootkits 🔒
+## 12) Check For Rootkits 🔒
 
 * Install Rootkit Hunter with sudo apt install rkhunter
 * Run Rookit Hunter with sudo rkhunter -c
@@ -75,20 +80,21 @@
 * If Rootkit Hunter finds anything aside from unhide.rb, agree to let it clean the system
 * Set Rootkit Hunter to run periodically by opening /etc/default/rkhunter and changing CRON_DAILY_RUN and CRON_DB_UPDATE to true
 
-## 11) Run Lynis 📝
+## 13) Run Lynis 📝
 
 * Lynis gives an incredibly comprehensive system audit report
 * Install lynis with sudo apt install lynis
 * Run sudo lynis audit system to begin the report
 
-## 12) Check Password Files 🔑
+## 14) Check Password Files 🔑
 
 * Check hidden users or undesirable groups.
 * sudo gedit /etc/passwd
+* Also in /etc/passwd change PASS_MAXLEN to 90, PASS_MINLEN to 1, and PASS_WARNAGE 14
 * sudo gedit /etc/shadow
 * sudo gedit /etc/sudoers.d
 
-## 13) Check Log Files 📄
+## 15) Check Log Files 📄
 
 * Log files can allow you to find potential security issues caused by malicious activity.
 * /var/log/messages
@@ -100,7 +106,7 @@
 * /var/log/dpkg.log
 * The dpkg log can be very useful to find programs installed around the same time as known malware
 
-## 14) Check Running Processes 💿
+## 16) Check Running Processes 💿
 
 * ps aef lists all processes. You might want to scan these to see if anything weird is listed
 * ps aux | grep netcat returns all running processes with `netcat` in the name. Netcat is a networking utility that we don't want on the machine.
@@ -108,9 +114,7 @@
 * htop is a useful tool for monitoring processes. Learn more [here](https://www.tecmint.com/htop-cpu-monitoring-tool-in-linux/)
 * Learn more about ps [here](https://www.computernetworkingnotes.com/linux-tutorials/ps-aux-command-and-ps-command-explained.html)
 
-
-
-## 15) Check for Startup Programs 🚀
+## 17) Check for Startup Programs 🚀
 
 * Use sudo nano <file name> to check the contents of the following files:
 * /etc/rc.local
@@ -132,7 +136,7 @@
 * /etc/cron.weekly
 * /etc/init.d
 
-## 16) Ensure postfix is configured for local use only 📬
+## 18) Ensure postfix is configured for local use only 📬
 
 * Postfix should be removed, but I think Lynis installs it by default, so if you're able to install Lynis, you'll need to configure postfix to only send mail locally.
 * `sudo nano /etc/postfix/main.cf`
@@ -140,7 +144,7 @@
 * `inet_interfaces = loopback-only`
 * Restart postfix with `sudo systemctl restart postfix`
 
-## 17) Check Ports 🚤
+## 19) Check Ports 🚤
 
 * Run sudo lsof -i -P -n | grep -v "(ESTABLISHED)" to list all services listening on ports
 * Run sudo apt purge <package_name> to remove any unwanted services
