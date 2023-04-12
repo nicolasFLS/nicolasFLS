@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @nicolasFLS
 - 👀 I’m interested in Linux
-- 🌱 I’m currently learning Java
+- 🌱 I’m currently learning anything really
 - 💞️ I’m not looking to collaborate
-- 📫 How to reach me spintkov@gmail.com
+- 📫 How to reach me nicolasfls@outlook.com
