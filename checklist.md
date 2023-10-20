@@ -90,7 +90,7 @@
 
 * Check hidden users or undesirable groups.
 * `sudo gedit /etc/passwd`
-* Also in /etc/passwd change PASS_MAXLEN to 90, PASS_MINLEN to 1, and PASS_WARNAGE 14
+* Also in /etc/passwd change PASS_MAXLEN to 90, PASS_MINLEN to 7, and PASS_WARNAGE 5
 * `sudo gedit /etc/shadow`
 * `sudo gedit /etc/sudoers.d`
 
